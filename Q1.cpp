@@ -19,7 +19,7 @@ struct Employee {
 
 void addEmployee() {  
     Employee emp;  
-    ofstream outFile("employees.dat", ios::app);  
+    ofstream outFile("employees.dat", ios::app | ios::binary);  
     
     cout << "Enter Employee ID: ";  
     cin >> emp.id;  
@@ -29,29 +29,29 @@ void addEmployee() {
     cout << "Enter Employee Position: ";  
     getline(cin, emp.position);  
 
-   
+    outFile.write(reinterpret_cast<char*>(&emp), sizeof(emp));  
     outFile.close();  
-    cout << "Employee added successfully!" << endl;  
+    cout << "Employee added successfully!";  
 }  
 
 void searchEmployee(int id) {  
     Employee emp;  
-    ifstream inFile("employees.dat", ios::app);  
+    ifstream inFile("employees.dat", ios::binary);  
     bool found = false;  
 
     while (inFile.read(reinterpret_cast<char*>(&emp), sizeof(emp))) {  
         if (emp.id == id) {  
-            cout << "Employee Found!" << endl;  
-            cout << "ID: " << emp.id << endl;  
-            cout << "Name: " << emp.name << endl;  
-            cout << "Position: " << emp.position << endl;  
+            cout << "Employee Found!" ;  
+            cout << "ID: " << emp.id ;  
+            cout << "Name: " << emp.name ;  
+            cout << "Position: " << emp.position;  
             found = true;  
             break;  
         }  
     }  
 
     if (!found) {  
-        cout << "Employee not found!" << endl;  
+        cout << "Employee not found!";  
     }  
 
     inFile.close();  
@@ -65,8 +65,8 @@ void deleteEmployee(int id) {
 
     while (inFile.read(reinterpret_cast<char*>(&emp), sizeof(emp))) {  
         if (emp.id == id) {  
-            found = true; 
-            cout << "Employee with ID " << emp.id << " deleted!" << endl;  
+            found = true;  
+            cout << "Employee with ID " << emp.id << " deleted!";  
         } else {  
             outFile.write(reinterpret_cast<char*>(&emp), sizeof(emp));  
         }  
@@ -75,21 +75,21 @@ void deleteEmployee(int id) {
     inFile.close();  
     outFile.close();  
     
-    remove("employees.dat"); 
-    rename("temp.dat", "employees.dat"); 
+    remove("employees.dat");  
+    rename("temp.dat", "employees.dat");
 
     if (!found) {  
-        cout << "Employee not found!" << endl;  
+        cout << "Employee not found!" ;  
     }  
 }  
 
 void displayAllEmployees() {  
     Employee emp;  
     ifstream inFile("employees.dat", ios::binary);  
-    cout << "Employee Records:" << endl;  
+    cout << "Employee Records:" ;  
 
     while (inFile.read(reinterpret_cast<char*>(&emp), sizeof(emp))) {  
-        cout << "ID: " << emp.id << " Name: " << emp.name << " Position: " << emp.position << endl;  
+        cout << "ID: " << emp.id << " Name: " << emp.name << " Position: " << emp.position;  
     }  
 
     inFile.close();  
@@ -99,11 +99,11 @@ int main() {
     int choice, id;  
 
     do {  
-        cout << "\nEmployee Management System" << endl;  
-        cout << "1. Add Employee" << endl;  
-        cout << "2. Search Employee" << endl;  
-        cout << "3. Delete Employee" << endl;  
-        cout << "4. Display All Employees" << endl;  
+        cout << "\nEmployee Management System";  
+        cout << "1. Add Employee" ;  
+        cout << "2. Search Employee" ;  
+        cout << "3. Delete Employee" ;  
+        cout << "4. Display All Employees" ;  
         cout << "5. Exit" << endl;  
         cout << "Enter your choice: ";  
         cin >> choice;  
@@ -126,10 +126,10 @@ int main() {
                 displayAllEmployees();  
                 break;  
             case 5:  
-                cout << "Exiting..." << endl;  
+                cout << "Exiting..." ;  
                 break;  
             default:  
-                cout << "Invalid choice! Please try again." << endl;  
+                cout << "Invalid choice! Please try again.";  
         }  
     } while (choice != 5);  
 
