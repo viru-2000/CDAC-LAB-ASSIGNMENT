@@ -1,10 +1,4 @@
-//Student Database Management System
-//File handling has been effectively used for each feature of this project
-//Operation
-//1. Add Records
-//2. List Records
-//3. Modify Records
-//4. Delete Records
+
 
 #include <iostream>  
 #include <fstream>  
